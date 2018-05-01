@@ -1,11 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const passport = require("passport");
 
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
 
 const app = express();
+
+//middle-ware
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
+app.use(bodyParser.json());
 
 //DB Config
 const db = require("./config/keys").local;
@@ -19,9 +29,10 @@ mongoose
     console.log(err);
   });
 
-app.get("/", (req, res) => {
-  res.send("hey");
-});
+//passport middleware
+app.use(passport.initialize());
+//passport config
+require("./config/passport")(passport);
 
 //use routes
 app.use("/api/users", users);
