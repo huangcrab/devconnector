@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class Register extends Component {
   constructor() {
@@ -23,6 +24,11 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
+
+    axios
+      .post("/api/users/register", newUser)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
   };
   render() {
     return (
@@ -32,7 +38,8 @@ class Register extends Component {
           height="166"
           scrolling="no"
           frameborder="no"
-          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293&amp;{auto_play:true}"
+          allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/136501354&color=%232a3521&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
         />
         <div className="register">
           <div className="container">
