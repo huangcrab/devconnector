@@ -17,11 +17,11 @@ module.exports = function validateProfileInput(data) {
   }
 
   if (Validator.isEmpty(data.status)) {
-    errs.status = "Handle is required";
+    errs.status = "status is required";
   }
 
   if (Validator.isEmpty(data.skills)) {
-    errs.skills = "Handle is required";
+    errs.skills = "skills is required";
   }
 
   if (!isEmpty(data.website)) {
