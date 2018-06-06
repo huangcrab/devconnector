@@ -6,9 +6,10 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaGroup from "../common/TextAreaGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import InputGroup from "../common/InputGroup";
-import { createProfile } from "../../actions/profileActions";
+import { createProfile, getCurrentProfile } from "../../actions/profileActions";
+import isEmpty from "../../validation/is-empty";
 
-class CreateProfile extends Component {
+class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,9 +30,32 @@ class CreateProfile extends Component {
       errors: {}
     };
   }
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
+    }
+
+    if (nextProps.profile.profile) {
+      const profile = nextProps.profile.profile;
+
+      //bring skill array to comma value
+
+      //if profile field doesn't exist, make empty string
+      //profile.company = !isEmpty(profile.company) ? profile.company : "";
+
+      this.setState(prevState => ({
+        ...prevState,
+        ...profile,
+        ...profile.social,
+        skills: nextProps.profile.profile.skills.join(",")
+      }));
+      if (Object.keys(nextProps.profile.profile.social).length > 0) {
+        this.setState({ displaySocialInputs: true });
+      }
     }
   }
 
@@ -125,14 +149,11 @@ class CreateProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Create Your Profile</h1>
-              <p className="lead text-center">
-                Let's get some info to make your profile stand out
-              </p>
+              <h1 className="display-4 text-center">Edit Your Profile</h1>
               <small className="d-block pb-3">* = required fields</small>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
-                  placeholder="* Profile Hnalde"
+                  placeholder="* Profile Handle"
                   name="handle"
                   value={this.state.handle}
                   onChange={this.onChange}
@@ -224,7 +245,9 @@ class CreateProfile extends Component {
     );
   }
 }
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -236,5 +259,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createProfile }
-)(withRouter(CreateProfile));
+  { createProfile, getCurrentProfile }
+)(withRouter(EditProfile));
