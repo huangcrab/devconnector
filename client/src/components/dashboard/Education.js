@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
 import Moment from "react-moment";
+import { deleteEducation } from "../../actions/profileActions";
 
 class Education extends Component {
+  onDeleteClick = id => {
+    this.props.deleteEducation(id);
+  };
+
   render() {
     const education = this.props.education.map(edu => (
       <tr key={edu.id}>
@@ -15,7 +19,12 @@ class Education extends Component {
           {edu.to ? <Moment format="YYYY-MM-DD">{edu.to}</Moment> : "Current"}
         </td>
         <td>
-          <button className="btn btn-danger">Delete</button>
+          <button
+            onClick={this.onDeleteClick.bind(edu._id)}
+            className="btn btn-danger"
+          >
+            Delete
+          </button>
         </td>
       </tr>
     ));
@@ -38,7 +47,11 @@ class Education extends Component {
   }
 }
 
+Education.propTypes = {
+  deleteEducation: PropTypes.func.isRequired
+};
+
 export default connect(
   null,
-  {}
-)(withRouter(Education));
+  { deleteEducation }
+)(Education);
