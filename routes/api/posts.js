@@ -26,14 +26,16 @@ router.post(
       .then(post => {
         if (post.dislikes.some(e => e.user.toString() === req.user.id)) {
           const index = post.dislikes
-            .map(item => item.user)
+            .map(item => item.user.toString())
             .indexOf(req.user.id);
           post.dislikes.splice(index, 1);
           post.likes.unshift({ user: req.user.id });
         }
         //post.likes.filter(like => like.user.toString() === req.user.id).length > 0
         else if (post.likes.some(e => e.user.toString() === req.user.id)) {
-          const index = post.likes.map(item => item.user).indexOf(req.user.id);
+          const index = post.likes
+            .map(item => item.user.toString())
+            .indexOf(req.user.id);
           post.likes.splice(index, 1);
         } else {
           post.likes.unshift({ user: req.user.id });
@@ -44,8 +46,8 @@ router.post(
   }
 );
 
-//@route     POST api/posts/like/:id
-//@desc      like post
+//@route     POST api/posts/dislike/:id
+//@desc      dislike post
 //@access    PRIVATE
 router.post(
   "/dislike/:id",
@@ -55,12 +57,14 @@ router.post(
       .then(post => {
         //post.likes.filter(like => like.user.toString() === req.user.id).length > 0
         if (post.likes.some(e => e.user.toString() === req.user.id)) {
-          const index = post.likes.map(item => item.user).indexOf(req.user.id);
+          const index = post.likes
+            .map(item => item.user.toString())
+            .indexOf(req.user.id);
           post.likes.splice(index, 1);
           post.dislikes.unshift({ user: req.user.id });
         } else if (post.dislikes.some(e => e.user.toString() === req.user.id)) {
           const index = post.dislikes
-            .map(item => item.user)
+            .map(item => item.user.toString())
             .indexOf(req.user.id);
           post.dislikes.splice(index, 1);
         } else {
