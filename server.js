@@ -19,7 +19,8 @@ app.use(
 app.use(bodyParser.json());
 
 //DB Config
-const db = require("./config/keys").local;
+//const db = require("./config/keys").local; local DB
+const db = require("./config/keys").mongoURI;
 //connect to mlab
 mongoose
   .connect(db)
