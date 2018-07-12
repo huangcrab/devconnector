@@ -43,13 +43,13 @@ class ProfileGithub extends Component {
           </div>
           <div className="col-md-6">
             <span className="badge badge-info mr-1">
-              Stars: {repos.stargazers_count}
+              Stars: {repo.stargazers_count}
             </span>
             <span className="badge badge-secondary mr-1">
-              Watchers: {repos.watchers_count}
+              Watchers: {repo.watchers_count}
             </span>
             <span className="badge badge-success">
-              Forks: {repos.forks_count}
+              Forks: {repo.forks_count}
             </span>
           </div>
         </div>
