@@ -20,7 +20,13 @@ app.use(bodyParser.json());
 
 //DB Config
 //const db = require("./config/keys").local; local DB
-const db = require("./config/keys").mongoURI;
+let db;
+if (process.env.NODE_ENV === "production") {
+  db = require("./config/keys").mongoURI;
+} else {
+  db = require("./config/keys").local;
+}
+
 //connect to mlab
 mongoose
   .connect(db)
