@@ -51,7 +51,7 @@ class Login extends Component {
               <div className="col-md-8 m-auto">
                 <h1 className="display-4 text-center">Log In</h1>
                 <p className="lead text-center">
-                  Sign in to your DevConnector account
+                  Sign in to your ZoneX account
                 </p>
                 <form onSubmit={this.onSubmit}>
                   {/* <div className="form-group">
@@ -111,4 +111,7 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Login);
