@@ -23,7 +23,8 @@ import AddEducation from "./components/add-credential/AddEducation";
 import AddExperience from "./components/add-credential/AddExperience";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
-import Post from "./components/posts/Post";
+import Posts from "./components/posts/Post";
+import Post from "./components/post/Post";
 import NotFound from "./components/not-found/NotFound";
 //check for token
 
@@ -82,7 +83,8 @@ class App extends Component {
                 path="/add-experience"
                 component={AddExperience}
               />
-              <PrivateRoute exact path="/feed" component={Post} />
+              <PrivateRoute exact path="/feed" component={Posts} />
+              <PrivateRoute exact path="/post/:id" component={Post} />
             </Switch>
             <Route exact path="/not-found" component={NotFound} />
             <Footer />

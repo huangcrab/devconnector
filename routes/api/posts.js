@@ -86,7 +86,7 @@ router.post(
     const { errs, isValid } = validateCommentInput(req.body);
 
     if (!isValid) {
-      res.status(400).json(errs);
+      return res.status(400).json(errs);
     }
 
     Post.findById(req.params.id)
@@ -120,7 +120,7 @@ router.delete(
         );
         if (result.length > 0) {
           const index = post.comments
-            .map(item => item._id)
+            .map(item => item._id.toString())
             .indexOf(req.params.comment_id);
           post.comments.splice(index, 1);
         } else {
