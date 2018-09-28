@@ -162,7 +162,7 @@ class EditProfile extends Component {
             error={errors.facebook}
           />
           <InputGroup
-            placeholder="Youtube Channel URL"
+            placeholder="Youtube URL"
             name="youtube"
             icon="fab fa-youtube"
             value={this.state.youtube}
