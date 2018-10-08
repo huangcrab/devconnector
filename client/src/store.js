@@ -1,18 +1,11 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import rootReducer from "./reducers";
+// import { createStore, applyMiddleware, compose } from "redux";
+// import thunk from "redux-thunk";
+// import rootReducer from "./reducers";
 
-const initialState = {};
+// const initialState = {};
 
-const middleware = [thunk];
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
-const store = createStore(
-  reducer,
-  /* preloadedState, */ composeEnhancers(applyMiddleware(...middleware))
-);
+// const middleware = [thunk];
+
 // const store = createStore(
 //   rootReducer,
 //   initialState,
@@ -22,4 +15,28 @@ const store = createStore(
 //   )
 // );
 
-export default store;
+// export default store;
+import { createStore, compose, applyMiddleware } from "redux";
+import { createEpicMiddleware } from "redux-observable";
+import { createReducer } from "./reducer";
+import { epic } from "./epic";
+
+import { composeWithDevTools } from "redux-devtools-extension";
+
+const initialState = {};
+
+const configureStore = () => {
+  const epicMiddleware = createEpicMiddleware(epic);
+  const enhancers = composeEnhancers(applyMiddleware(epicMiddleware));
+  const store = createStore(
+    createReducer(),
+    initialState,
+    composeWithDevTools(
+      applyMiddleware(epicMiddleware)
+      // other store enhancers if any
+    )
+  );
+  return store;
+};
+
+export { configureStore };
